@@ -8,7 +8,7 @@ const KEY = "30822963-d0fd13470d1d847e8cb7d7e51";
 
 // https://pixabay.com/api/?q=cat&page=1&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12
 
-class App extends Component {
+export class App extends Component {
   state = {
     contacts: [],
   };
