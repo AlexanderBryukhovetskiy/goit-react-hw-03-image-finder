@@ -2,7 +2,7 @@ import React from "react";
 import css from "./Container.module.css";
 import PropTypes from "prop-types";
 
-const Container = ({ children }) => {
+export const Container = ({ children }) => {
   return (
     <div className={css.container}>
       {children}
@@ -15,4 +15,4 @@ Container.propTypes = {
     PropTypes.any.isRequired).isRequired
 };
 
-export default Container;
+// export default Container;

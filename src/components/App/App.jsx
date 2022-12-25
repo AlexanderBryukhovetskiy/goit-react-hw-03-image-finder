@@ -66,10 +66,8 @@ request () {
 
 }
 
-
-
   render () {
-    const {contacts, filter} = this.state;
+    // const {contacts, filter} = this.state;
     return (  
         <Container>
           <Searchbar onSubmit={this.request}/>
