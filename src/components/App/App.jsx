@@ -1,7 +1,10 @@
 import React, { Component }  from "react";
 import css from "./App.module.css";
-import { Container } from "../Container/Container";
-import { Searchbar } from "../Searchbar/Searchbar";
+import  Container  from "../Container/Container";
+import Searchbar from "../Searchbar/Searchbar";
+// import ImageGalleryItem from "components/ImageGalleryItem/ImageGalleryItem";
+import ImageGallery from "components/ImageGallery/ImageGallery";
+import Button from "components/Button/Button";
 
 
 const KEY = "30822963-d0fd13470d1d847e8cb7d7e51";
@@ -10,7 +13,7 @@ const KEY = "30822963-d0fd13470d1d847e8cb7d7e51";
 
 export class App extends Component {
   state = {
-    contacts: [],
+    imageList: [],
   };
 
 //   componentDidMount () {
@@ -62,15 +65,19 @@ export class App extends Component {
 //     }))
 //   }
 
-request () {
+request () {}
 
-}
+loadMore () {}
+
+
 
   render () {
     // const {contacts, filter} = this.state;
     return (  
         <Container>
           <Searchbar onSubmit={this.request}/>
+          <ImageGallery imageList={this.state.imageList}/>
+          <Button onClick={this.loadMore}/>
         </Container>
     )
   }

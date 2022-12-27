@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import css from "./Searchbar.module.css";
 
-export const Searchbar = ( { onSubmit } ) => {
+const Searchbar = ( { onSubmit } ) => {
   return (
     <header className={css.Searchbar}>
       <form className={css.form}>
