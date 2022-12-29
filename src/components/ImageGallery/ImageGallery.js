@@ -4,9 +4,9 @@ import css from "./ImageGallery.module.css";
 import ImageGalleryItem from "components/ImageGalleryItem/ImageGalleryItem";
 
 
-const ImageGallery = ( imageList ) => {
+const ImageGallery = ( {imageList} ) => {
     return  <ul className={css.gallery}>
-              {imageList.map( ({imageListItem}) => (
+              {imageList.map( imageListItem => (
                 <ImageGalleryItem data={imageListItem}/>
               ))}
             </ul>

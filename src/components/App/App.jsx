@@ -2,7 +2,7 @@ import React, { Component }  from "react";
 // import css from "./App.module.css";
 import  Container  from "../Container/Container";
 import Searchbar from "../Searchbar/Searchbar";
-import ImageGalleryItem from "components/ImageGalleryItem/ImageGalleryItem";
+// import ImageGalleryItem from "components/ImageGalleryItem/ImageGalleryItem";
 import ImageGallery from "components/ImageGallery/ImageGallery";
 import Button from "components/Button/Button";
 
@@ -69,16 +69,17 @@ export class App extends Component {
 
   loadMore () {}
 
-
-
   render () {
-    // const {contacts, filter} = this.state;
+    const { imageList } = this.state;
     return (  
         <Container>
           <Searchbar onSubmit={this.request}/>
-          
+          {  imageList.length > 0 && 
+          (<div>
           <ImageGallery imageList={this.state.imageList}/>
           <Button onClick={this.loadMore}/>
+          </div>)
+          }
         </Container>
     )
   }
