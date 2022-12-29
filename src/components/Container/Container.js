@@ -11,8 +11,9 @@ const Container = ({ children }) => {
 };
 
 Container.propTypes = {
-  children: PropTypes.arrayOf(
-    PropTypes.any.isRequired).isRequired
+  // children: PropTypes.shape(
+  //   PropTypes.any.isRequired).isRequired
+  children: PropTypes.any.isRequired
 };
 
 export default Container;

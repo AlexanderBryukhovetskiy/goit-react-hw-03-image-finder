@@ -5,13 +5,11 @@ import ImageGalleryItem from "components/ImageGalleryItem/ImageGalleryItem";
 
 
 const ImageGallery = ( imageList ) => {
-    return (
-      <ul className={css.gallery}>
-        {imageList.map( ({imageListItem}) => (
-          <ImageGalleryItem data={imageListItem}/>
-        ))}
-      </ul>
-    )
+    return  <ul className={css.gallery}>
+              {imageList.map( ({imageListItem}) => (
+                <ImageGalleryItem data={imageListItem}/>
+              ))}
+            </ul>
 }
 
 ImageGallery.propTypes = {
