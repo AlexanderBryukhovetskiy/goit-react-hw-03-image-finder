@@ -1,71 +1,47 @@
 import React, { Component }  from "react";
+
 // import css from "./App.module.css";
-import  Container  from "../Container/Container";
-import Searchbar from "../Searchbar/Searchbar";
-// import ImageGalleryItem from "components/ImageGalleryItem/ImageGalleryItem";
-import ImageGallery from "components/ImageGallery/ImageGallery";
-import Button from "components/Button/Button";
+import  Container  from "../Container";
+import Searchbar from "../Searchbar";
+// import ImageGalleryItem from "components/ImageGalleryItem";
+import ImageGallery from "components/ImageGallery";
+import Button from "components/Button";
 
+// import { ToastContainer } from 'react-toastify';
 
-// const KEY = "30822963-d0fd13470d1d847e8cb7d7e51";
-
-// https://pixabay.com/api/?q=cat&page=1&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12
+import axios from 'axios';
 
 export class App extends Component {
   state = {
+    searchName: '',
     imageList: [],
+    error: null,
+    status: 'idle',
   };
 
-//   componentDidMount () {
-//     const savedContacts = localStorage.getItem(LS_KEY);
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.searchName !== this.state.searchName) {
+      console.log('изменилось значение для поиска');
 
-//     if (savedContacts) {
-//       this.setState({ contacts: JSON.parse(savedContacts) });
-//     }
-// }
+      const KEY = "30822963-d0fd13470d1d847e8cb7d7e51";
+      const requestParams = `https://pixabay.com/api/?q=${this.state.searchName}&page=1&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`;
 
-// componentDidUpdate(prevProps, prevState) {
-//   if (prevState.contacts.length !== this.state.contacts.length){
-//     localStorage.setItem(LS_KEY, JSON.stringify(this.state.contacts));
-//   }
-// }
+      fetch(requestParams)
+      .then( response => response.json()).then(console.log)
+      
+    }
+  }
 
-//   onSubmitHandler = newContact => { 
-//     const contacts = this.state.contacts;
-//     const isUnique = contacts.filter( contactInBook => 
-//       contactInBook.name.toLowerCase() === newContact.name.toLowerCase());
+  handleSearchSubmit = searchName => {
+    this.setState({ searchName });
+  }
+
+  // getRequest  = searchName => {
+    // const KEY = "30822963-d0fd13470d1d847e8cb7d7e51";
+
+    // const requestParams = `https://pixabay.com/api/?q=${searchName}&page=1&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`;
     
-//     if (isUnique.length > 0) {
-//       return alert (`${newContact.name} is already in contacts.`);
-//     }
-//     else {
-//       this.setState(  (prevState) => {
-//         return ({contacts: [...prevState.contacts, newContact] })
-//       })
-//       //console.log('newContact added to phonebook');
-//     }
-// }
-
-//   onHandleFilter = event => {
-//     const value =  event.currentTarget.value;
-//     this.setState( {filter: value} );
-//   }
-
-//   searchName = () => {
-//     const searchingName = this.state.filter.toLowerCase();
-
-//     return this.state.contacts.filter( contact => (
-//       contact.name.toLowerCase().includes(searchingName)
-//     ));
-//   }
-
-//   deleteContact = id => { 
-//     this.setState(  prevState => ({
-//       contacts: prevState.contacts.filter( contact => contact.id !== id)
-//     }))
-//   }
-
-  request () {}
+  // }
 
   loadMore () {}
 
@@ -73,13 +49,14 @@ export class App extends Component {
     const { imageList } = this.state;
     return (  
         <Container>
-          <Searchbar onSubmit={this.request}/>
+          <Searchbar onSubmit={this.handleSearchSubmit}/>
           {  imageList.length > 0 && 
           (<div>
           <ImageGallery imageList={this.state.imageList}/>
           <Button onClick={this.loadMore}/>
           </div>)
           }
+          {/* <ToastContainer autoClose={3000}/> */}
         </Container>
     )
   }
