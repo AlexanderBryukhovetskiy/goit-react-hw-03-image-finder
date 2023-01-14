@@ -10,7 +10,7 @@ class ImageGallery extends Component {
       const { imageList } = this.props;
 
       return (
-        <ul className={css.gallery}>
+        <ul className={css.ImageGallery }>
           {imageList.map( imageListItem => (
             <ImageGalleryItem data={imageListItem}/>
           ))}
@@ -23,7 +23,7 @@ class ImageGallery extends Component {
 ImageGallery.propTypes = {
   imageList: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
       webformatURL: PropTypes.string.isRequired,
       largeImageURL: PropTypes.string.isRequired
   }))

@@ -8,8 +8,6 @@ import Button from "components/Button";
 
 // import ImageGalleryItem from "components/ImageGalleryItem";
 // import { ToastContainer } from 'react-toastify';
-// import { css } from "react-toastify";
-
 
 
 export class App extends Component {
@@ -20,24 +18,32 @@ export class App extends Component {
     loading: false,
   };
 
-  componentDidUpdate(prevProps, prevState) {
 
-    const {searchName} = this.state.searchName;
+  async componentDidUpdate(prevProps, prevState) {
 
+    const { searchName } = this.state;
+ 
     if (prevState.searchName !== searchName) {
       console.log('изменилось значение для поиска');
-
+      console.log('Это prevName в componentDidUpdate : ', prevState.searchName);
+      console.log('Это searchName в componentDidUpdate : ', searchName);
+      
       try{
         this.setState( {loading: true} );
 
-        fetchPictures(searchName);
-    
-        if (response.ok) {
-          const data = response.json();
-          console.log('data :', data);
-    
-          this.setState( {imageList: data.hits} );
-          console.log("imageList : ", this.setState.imageList)
+        const response = await fetchPictures(searchName);
+        console.log('response: ', response);
+        console.log('response.data:', response.data.totalHits);
+        
+        
+        if ( response.data.totalHits > 0 ) {
+
+          const imageList = response.data.hits;
+          console.log('response.data.hits:', imageList);
+          
+          this.setState( { imageList } );
+          console.log("imageList : ", this.setState.imageList);
+          
         } 
         else {
           return Promise.reject(new Error(`Нет картинок по запросу ${searchName}`))
@@ -58,14 +64,16 @@ export class App extends Component {
     const { searchName,  imageList, loading, error } = this.state;
 
     return (  
-      <div className={css.App}>
+      <>
         {/* <Container> */}
         <Searchbar onSubmit={this.handleSearchSubmit}/>
         { error && (<h1> Поисковой запрос не дал результатов. Поробуйте другое значение</h1>)}
 
+        <div className={css.App}>
+
         { loading && <p>загрузка...</p>}
 
-        { !imageList.length && <div><p>введите поисковой запрос</p></div>}
+        { !imageList.length && <p>введите поисковой запрос</p>}
 
         { imageList.length > 0 && 
           <>
@@ -78,6 +86,7 @@ export class App extends Component {
         {/* <ToastContainer autoClose={3000}/> */}
         {/* </Container> */}
         </div>
+      </>
     )
   }
 };
