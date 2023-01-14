@@ -5,7 +5,7 @@ import css from "./ImageGalleryItem.module.css";
 
 const ImageGalleryItem = ( data ) => {
   return (
-    <li key={data.id} className={css.ImageGalleryItem} >
+    <li id={data.id} className={css.ImageGalleryItem} >
       <img src={data.webformatURL} alt="" 
         className={css.ImageGalleryItem__Image} />
     </li>
@@ -16,7 +16,7 @@ ImageGalleryItem.propTypes = {
   data: PropTypes.shape ({
     id: PropTypes.number.isRequired,
     webformatURL: PropTypes.string.isRequired
-  }).isRequired
+  })
 };
 
 export default ImageGalleryItem;

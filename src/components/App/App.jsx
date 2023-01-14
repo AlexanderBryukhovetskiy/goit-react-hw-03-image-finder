@@ -42,8 +42,6 @@ export class App extends Component {
           console.log('response.data.hits:', imageList);
           
           this.setState( { imageList } );
-          console.log("imageList : ", this.setState.imageList);
-          
         } 
         else {
           return Promise.reject(new Error(`Нет картинок по запросу ${searchName}`))

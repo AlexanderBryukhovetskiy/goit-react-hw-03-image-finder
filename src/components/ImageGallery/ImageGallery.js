@@ -11,14 +11,13 @@ class ImageGallery extends Component {
 
       return (
         <ul className={css.ImageGallery }>
-          {imageList.map( imageListItem => (
-            <ImageGalleryItem data={imageListItem}/>
+            {imageList.map( imageListItem => (
+            <ImageGalleryItem key={imageListItem.id}/>
           ))}
         </ul>
       )
     }
 };
-
 
 ImageGallery.propTypes = {
   imageList: PropTypes.arrayOf(
