@@ -37,6 +37,10 @@ export class App extends Component {
 
         console.log('response: ', response);
         console.log('response.data:', response.data.totalHits);
+
+        if (response.data.totalHits === 0){
+          return toast(`Нет картинок по запросу ${searchName}`);
+        }
         
         if ( response.data.totalHits > 0 ) {
 
@@ -51,7 +55,6 @@ export class App extends Component {
       }
       catch(error) { 
         this.setState( {error} );
-        return toast(error);
       }
       finally { this.setState( {loading: false} ) };
     };
