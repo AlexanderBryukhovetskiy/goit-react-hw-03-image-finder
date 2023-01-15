@@ -1,19 +1,19 @@
 import React, { Component }  from "react";
 import css from "./App.module.css";
-// import  Container  from "../Container";
 import Searchbar from "../Searchbar";
 import ImageGallery from "components/ImageGallery";
 import fetchPictures from '../functions';
 import Button from "components/Button";
 
-// import ImageGalleryItem from "components/ImageGalleryItem";
-// import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export class App extends Component {
   state = {
     searchName: '',
     imageList: [],
+    page: 1,
     error: null,
     loading: false,
   };
@@ -21,20 +21,22 @@ export class App extends Component {
 
   async componentDidUpdate(prevProps, prevState) {
 
-    const { searchName } = this.state;
+    const { searchName, page } = this.state;
  
-    if (prevState.searchName !== searchName) {
-      console.log('изменилось значение для поиска');
-      console.log('Это prevName в componentDidUpdate : ', prevState.searchName);
+    if (prevState.searchName !== searchName || prevState.page !== page) {
+      console.log('изменились значение для поиска или номер страницы');
+      console.log('Это prevState.searchName в componentDidUpdate : ', prevState.searchName);
       console.log('Это searchName в componentDidUpdate : ', searchName);
-      
+      console.log('Это prevState.page в componentDidUpdate : ', prevState.page);
+      console.log('Это page в componentDidUpdate : ', page);      
+
       try{
         this.setState( {loading: true} );
 
-        const response = await fetchPictures(searchName);
+        const response = await fetchPictures(searchName, page);
+
         console.log('response: ', response);
         console.log('response.data:', response.data.totalHits);
-        
         
         if ( response.data.totalHits > 0 ) {
 
@@ -44,45 +46,56 @@ export class App extends Component {
           this.setState( { imageList } );
         } 
         else {
-          return Promise.reject(new Error(`Нет картинок по запросу ${searchName}`))
+          return Promise.reject(new Error(`Нет картинок по запросу ${searchName}`));
         }
       }
-      catch(error) { this.setState( {error} ) }
+      catch(error) { 
+        this.setState( {error} );
+        return toast(error);
+      }
       finally { this.setState( {loading: false} ) };
     };
   };
 
   handleSearchSubmit = searchName => {
-    this.setState({ searchName });
+    this.setState({ 
+      searchName,
+      page: 1,
+      imageList: [],
+    });
   }
 
-  loadMore () {}
+  loadMore = () => {
+    this.setState( prevState => ({
+      page: prevState.page + 1,
+    }))
+  }
 
   render () {
     const { searchName,  imageList, loading, error } = this.state;
 
     return (  
       <>
-        {/* <Container> */}
         <Searchbar onSubmit={this.handleSearchSubmit}/>
-        { error && (<h1> Поисковой запрос не дал результатов. Поробуйте другое значение</h1>)}
+        { error && (<h1> There are no images by search name ${searchName}. Please try input another word</h1>)}
 
         <div className={css.App}>
 
-        { loading && <p>загрузка...</p>}
+          { loading && <p className={css.serviceMessage}>loading...</p>}
 
-        { !imageList.length && <p>введите поисковой запрос</p>}
+          { !imageList.length && !loading && <p className={css.serviceMessage}>Please enter search word</p>}
 
-        { imageList.length > 0 && 
-          <>
-            <ImageGallery imageList={imageList}/> 
+          { imageList.length > 0 && 
+            <>
+              <ImageGallery imageList={imageList}/> 
 
-            <Button onClick={this.loadMore}/>
-          </>
-        }
+              {/* { loading && <p className={css.serviceMessage}>loading...</p>} */}
 
-        {/* <ToastContainer autoClose={3000}/> */}
-        {/* </Container> */}
+              <Button onClick={ this.loadMore }/>
+            </>
+          }
+
+          <ToastContainer autoClose={3000}/> 
         </div>
       </>
     )
