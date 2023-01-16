@@ -25,7 +25,6 @@ class Searchbar extends Component {
     }
 
     this.props.onSubmit(searchName); 
-    console.log('event.target : ',event.target);
   }
 
   render () {

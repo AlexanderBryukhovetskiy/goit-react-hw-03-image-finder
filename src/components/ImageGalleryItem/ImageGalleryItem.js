@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import css from "./ImageGalleryItem.module.css";
 
 
-const ImageGalleryItem = ({ data }) => {
+const ImageGalleryItem = ({ data, onClick }) => {
   return (
-    <li id={data.id} className={css.ImageGalleryItem} >
+    <li onClick={onClick} id={data.id} className={css.ImageGalleryItem} >
       <img src={data.webformatURL} alt="" 
         className={css.ImageGalleryItem__Image} />
     </li>
@@ -15,8 +15,9 @@ const ImageGalleryItem = ({ data }) => {
 ImageGalleryItem.propTypes = {
   data: PropTypes.shape ({
     id: PropTypes.number.isRequired,
-    webformatURL: PropTypes.string.isRequired
-  })
+    webformatURL: PropTypes.string.isRequired,
+  }),
+  onClick: PropTypes.func.isRequired,
 };
 
 export default ImageGalleryItem;

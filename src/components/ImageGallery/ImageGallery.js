@@ -7,12 +7,12 @@ import ImageGalleryItem from "components/ImageGalleryItem";
 class ImageGallery extends Component {
 
     render() {
-      const { imageList } = this.props;
+      const { imageList, onClick } = this.props;
 
       return (
         <ul className={css.ImageGallery }>
             {imageList.map( imageListItem => (
-            <ImageGalleryItem data={imageListItem} key={imageListItem.id}/>
+            <ImageGalleryItem onClick={onClick} data={imageListItem} key={imageListItem.id}/>
           ))}
         </ul>
       )
@@ -25,7 +25,8 @@ ImageGallery.propTypes = {
       id: PropTypes.number.isRequired,
       webformatURL: PropTypes.string.isRequired,
       largeImageURL: PropTypes.string.isRequired
-  }))
+  })),
+  onClick: PropTypes.func.isRequired,
 };
 
 export default ImageGallery;
