@@ -18,6 +18,7 @@ export class App extends Component {
     error: null,
     loading: false,
     showModal: false,
+    activeImageId: null,
   };
 
 
@@ -26,19 +27,12 @@ export class App extends Component {
     const { searchName, page } = this.state;
 
     if (prevState.searchName !== searchName || prevState.page !== page) {
-      // console.log('изменились значение для поиска или номер страницы');
-      // console.log('Это prevState.searchName в componentDidUpdate : ', prevState.searchName);
-      // console.log('Это searchName в componentDidUpdate : ', searchName);
-      // console.log('Это prevState.page в componentDidUpdate : ', prevState.page);
-      // console.log('Это page в componentDidUpdate : ', page);      
-
+      console.log('изменились значение для поиска или номер страницы');
+   
       try{
         this.setState( { loading: true } );
 
         const response = await fetchPictures(searchName, page);
-
-        // console.log('response: ', response);
-
         const totalImages = response.data.totalHits;
 
         if ( totalImages === 0 ) {
@@ -47,10 +41,9 @@ export class App extends Component {
         
         if ( totalImages > 0 ) {
 
-          console.log("totalImages :", totalImages);
+          // console.log("totalImages :", totalImages);
 
           const imageList = response.data.hits;
-          console.log('new response.data.hits:', imageList);
 
           if ( prevState.searchName !== searchName ) {
             this.setState( { 
@@ -99,43 +92,49 @@ export class App extends Component {
     }))
   };
 
+  setActiveImageId = (id) => {
+    this.setState( {activeImageId: id } );
+
+  }
+
   render () {
-    const { showModal, totalImages, searchName,  imageList, loading, error } = this.state;
+    const { showModal, totalImages, searchName,  imageList, loading, error, activeImageId} = this.state;
 
     return (  
       <>
         <Searchbar onSubmit={this.handleSearchSubmit}/>
 
-
-
         <div className={css.App}>
-
           { error && (<h1> There are no images by search name ${searchName}. Please try input another word</h1>)}
-          
-          { showModal && <Modal/>}
-          
+
+          { showModal && 
+          <Modal  onClose={this.toggleModal} 
+                  imageList={imageList} 
+                  activeImageId={activeImageId}>
+          </Modal>}
+
           { loading && <p className={css.serviceMessage}>loading...</p>}
 
           { !imageList.length && !loading && <p className={css.serviceMessage}>Please enter search word</p>}
 
           { imageList.length > 0 && 
-            <>
+            <div>
               <ImageGallery onClick={this.toggleModal} imageList={imageList}/> 
 
               { loading && <p className={css.serviceMessage}>loading...</p>}
 
-              {  imageList.length > 0 
-              && imageList.length < 500
-              && imageList.length < totalImages 
-              && (<Button onClick={ this.loadMore }/>)}
-            </>
+              { imageList.length > 0 
+                && imageList.length < 500
+                && imageList.length < totalImages 
+                && (<Button onClick={ this.loadMore }/>)
+              }
+            </div>
           }
-
           <ToastContainer autoClose={3000}/> 
         </div>
       </>
     )
-  }
+  };
 };
 
 export default App;
