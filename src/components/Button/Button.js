@@ -4,7 +4,6 @@ import css from './Button.module.css';
 
 
 const Button = ( { onClick } ) => {
- 
   return (
     <button 
       type="button" 
@@ -15,9 +14,8 @@ const Button = ( { onClick } ) => {
   )
 };
 
-
-Button.propTypes ={
-    onClick: PropTypes.func.isRequired
+Button.propTypes = {
+  onClick: PropTypes.func.isRequired
 };
 
 export default Button;
