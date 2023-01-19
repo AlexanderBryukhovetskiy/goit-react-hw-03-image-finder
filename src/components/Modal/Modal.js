@@ -22,6 +22,8 @@ class Modal extends Component {
   }
 
   handleOverlayClick = (event) => {
+    console.log('event.target: ', event.target);
+    console.log('event.currentTarget :', event.currentTarget);
     if (event.target === event.currentTarget) {
       this.props.onClose();
     }
@@ -30,7 +32,7 @@ class Modal extends Component {
   render() {
     return createPortal (
       <div className={css.Overlay} onClick={this.handleOverlayClick}>
-        <div className={css.Modal}>
+        <div className={css.Modal} >
           {this.props.children}
         </div>
       </div> , 
