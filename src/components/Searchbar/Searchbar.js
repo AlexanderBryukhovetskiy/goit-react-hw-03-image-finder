@@ -6,7 +6,6 @@ import { toast } from 'react-toastify';
 class Searchbar extends Component {
   state = { 
     searchName: '', 
-
   }; 
 
   handleChange = event => {
@@ -25,6 +24,8 @@ class Searchbar extends Component {
     }
 
     this.props.onSubmit(searchName); 
+
+    event.currentTarget.reset();
   }
 
   render () {

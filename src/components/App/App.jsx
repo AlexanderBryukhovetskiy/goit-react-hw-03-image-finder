@@ -4,8 +4,10 @@ import Searchbar from "../Searchbar";
 import ImageGallery from "components/ImageGallery";
 import fetchPictures from '../functions';
 import Button from "components/Button";
+import Loader from "components/Loader";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 
 export class App extends Component {
   state = {
@@ -22,7 +24,7 @@ export class App extends Component {
     const { searchName, page } = this.state;
 
     if (prevState.searchName !== searchName || prevState.page !== page) {
-      console.log('изменились значение для поиска или номер страницы');
+      console.log('Search name or page number changed');
   
       try{
         this.setState( { loading: true } );
@@ -31,7 +33,7 @@ export class App extends Component {
         const totalImages = response.data.totalHits;
 
         if ( totalImages === 0 ) {
-          return toast(`Нет картинок по запросу ${searchName}`);
+          return toast(`There are no pictures by word ${searchName}`);
         }
         
         if ( totalImages > 0 ) {
@@ -91,15 +93,15 @@ export class App extends Component {
         <div className={css.App}>
           { error && (<h1> There are no images by search name ${searchName}. Please try input another word</h1>) }
 
-          { loading && <p className={css.serviceMessage}>loading...</p> }
+          { loading && <Loader/> }
 
           { !imageList.length && !loading && <p className={css.serviceMessage}>Please enter search word</p> }
 
           { imageList.length > 0 && 
-            <div>
+            <div className={css.App}>
               <ImageGallery imageList={imageList}/> 
 
-              { loading && <p className={css.serviceMessage}>loading...</p>}
+              { loading && <Loader/> }
 
               { imageList.length > 0 
                 && imageList.length < 500

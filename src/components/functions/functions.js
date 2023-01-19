@@ -2,9 +2,9 @@ import axios from 'axios';
 
 const fetchPictures = async (searchName, page) => {
 
-  console.log('Это searchName в fetchPictures : ', searchName);
+  console.log('This is a searchName in function "fetchPictures" : ', searchName);
 
-  console.log('Это page в fetchPictures : ', page);
+  console.log('This is number of page in function "fetchPictures" : ', page);
 
   const KEY = "30822963-d0fd13470d1d847e8cb7d7e51";
   
