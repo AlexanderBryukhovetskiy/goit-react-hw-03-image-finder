@@ -27,17 +27,26 @@ class ImageGalleryItem extends Component {
     const { data } = this.props;
 
     return (
-      <li onClick={this.toggleModal} id={data.id} 
-          className={css.ImageGalleryItem} >
-
-        <img src={data.webformatURL} alt="" 
+        <li id={data.id} className={css.ImageGalleryItem} >
+          <img onClick={this.toggleModal} src={data.webformatURL} alt="" 
             className={css.ImageGalleryItem__Image} />
+          {showModal && 
+          <Modal onClose={this.toggleModal}>
+            <img src={data.largeImageURL} alt=""/>
+          </Modal>}
+        </li>
 
-        {showModal && 
-        <Modal onClose={this.toggleModal}>
-          <img src={data.largeImageURL} alt=""/>
-        </Modal>}
-      </li>
+        // <>  
+        // <li onClick={this.toggleModal} 
+        //     id={data.id} className={css.ImageGalleryItem} >
+        //   <img src={data.webformatURL} alt="" 
+        //     className={css.ImageGalleryItem__Image} />
+        // </li>
+        // {showModal && 
+        // <Modal onClose={this.toggleModal}>
+        //   <img src={data.largeImageURL} alt=""/>
+        // </Modal>}
+        // </>
     )
   }
 }
